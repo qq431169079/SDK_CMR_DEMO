@@ -651,7 +651,7 @@
     <string name="delete_f">删除失败</string>
     <string name="change_status_s">状态改变成功</string>
     <string name="change_status_f">状态改变失败</string>
-    <string name="change_status">改变状态</string>
+    <string name="change_status" >改变状态</string>
     <string name="delete">删除</string>
     <string name="input_device_name">请输入设备名</string>
     <string name="change_dev_name_s">修改设备名成功</string>
