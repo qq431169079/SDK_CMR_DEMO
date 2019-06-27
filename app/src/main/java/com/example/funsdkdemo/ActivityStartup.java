@@ -1,12 +1,14 @@
 package com.example.funsdkdemo;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentActivity;
 import android.view.Window;
 import android.view.WindowManager;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.funsdkdemo.alarm.ServiceGuideLanAlarmNotification;
 import com.example.funsdkdemo.alarm.ServiceGuidePushAlarmNotification;
@@ -62,6 +64,7 @@ public class ActivityStartup extends FragmentActivity implements OnFunLoginListe
 		super.onDestroy();
 	}
 
+	@SuppressLint("HandlerLeak")
 	private Handler mHandler = new Handler() {
 
 		@Override

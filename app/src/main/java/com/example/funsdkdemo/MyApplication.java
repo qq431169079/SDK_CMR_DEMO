@@ -1,7 +1,10 @@
 package com.example.funsdkdemo;
 
+import android.app.Activity;
 import android.app.Application;
+import android.os.Bundle;
 
+import com.bang.demo.loglibrary.LogUtil;
 import com.example.download.XDownloadFileManager;
 import com.lib.funsdk.support.FunPath;
 import com.lib.funsdk.support.FunSupport;
@@ -12,7 +15,8 @@ public class MyApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		
+		LogUtil.init(BuildConfig.DEBUG,getPackageName());
+		registerActivityLifecycleCallbacks(activityLifecycleCallbacks);
 		/**
 		 * 以下是FunSDK初始化
 		 */
@@ -33,5 +37,42 @@ public class MyApplication extends Application {
 
 		FunSupport.getInstance().term();
 	}
-	
+
+	private  ActivityLifecycleCallbacks activityLifecycleCallbacks = new ActivityLifecycleCallbacks() {
+		@Override
+		public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+			LogUtil.e(activity.getClass().getSimpleName() + ".java");
+		}
+
+		@Override
+		public void onActivityStarted(Activity activity) {
+			LogUtil.e(activity.getClass().getSimpleName() + ".java");
+		}
+
+		@Override
+		public void onActivityResumed(Activity activity) {
+			LogUtil.e(activity.getClass().getSimpleName() + ".java");
+		}
+
+		@Override
+		public void onActivityPaused(Activity activity) {
+			LogUtil.e(activity.getClass().getSimpleName() + ".java");
+		}
+
+		@Override
+		public void onActivityStopped(Activity activity) {
+			LogUtil.e(activity.getClass().getSimpleName() + ".java");
+		}
+
+		@Override
+		public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+			LogUtil.e(activity.getClass().getSimpleName() + ".java");
+		}
+
+		@Override
+		public void onActivityDestroyed(Activity activity) {
+			LogUtil.e(activity.getClass().getSimpleName() + ".java");
+		}
+	};
+
 }

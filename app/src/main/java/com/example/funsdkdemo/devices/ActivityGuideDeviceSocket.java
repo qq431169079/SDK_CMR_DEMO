@@ -8,16 +8,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.common.UIFactory;
 import com.example.funsdkdemo.ActivityDemo;
@@ -40,7 +40,7 @@ import com.lib.funsdk.support.utils.FileUtils;
 import com.lib.sdk.struct.H264_DVR_FILE_DATA;
 
 
-public class ActivityGuideDeviceSocket extends ActivityDemo implements OnClickListener, OnFunDeviceOptListener, OnPageChangeListener {
+public class ActivityGuideDeviceSocket extends ActivityDemo implements OnClickListener, OnFunDeviceOptListener, ViewPager.OnPageChangeListener {
 
 	
 	private TextView mTextTitle = null;

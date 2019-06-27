@@ -22,6 +22,26 @@ allprojects {
     }
 }
 
+
+ext {
+//    [ANDROID DEFAULT CONFIGURE]
+    compileSdkVersion = 28
+    buildToolsVersion = "28.0.3"
+    minSdkVersion = 16
+    targetSdkVersion = 28
+    versionCode = 1
+    versionName = "1.0.0.7"
+    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+    //    [JAVA VERSION]
+    javaVersion = JavaVersion.VERSION_1_8
+
+    //    [APP COMPAT]
+    appcompatVersion = '1.1.0-beta01'
+
+    //    [OKHTTP]
+    okhttpVersion = "3.10.0"
+}
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

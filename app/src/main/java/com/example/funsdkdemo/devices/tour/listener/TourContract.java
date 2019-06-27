@@ -1,7 +1,7 @@
 package com.example.funsdkdemo.devices.tour.listener;
 
 import android.os.Message;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.example.funsdkdemo.devices.tour.model.bean.PTZTourBean;
 import com.example.funsdkdemo.devices.tour.model.bean.TourState;

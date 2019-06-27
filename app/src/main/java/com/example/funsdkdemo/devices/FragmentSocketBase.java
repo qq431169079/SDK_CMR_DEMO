@@ -1,7 +1,6 @@
 package com.example.funsdkdemo.devices;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.common.UIFactory;
 import com.example.funsdkdemo.ActivityDemo;

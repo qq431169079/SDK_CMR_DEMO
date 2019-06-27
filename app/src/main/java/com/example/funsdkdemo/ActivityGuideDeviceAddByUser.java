@@ -504,20 +504,24 @@ public class ActivityGuideDeviceAddByUser extends ActivityDemo implements OnClic
 		// TODO Auto-generated method stub
 		
 	}
-	
+
+
 	@Override
 	protected void onActivityResult(int requestCode, int responseCode, Intent data) {
-		if ( requestCode == 1 
-				&& responseCode == 1 ) {
+
+		if (requestCode == 1
+				&& responseCode == 1) {
 			// Demo, 扫描二维码的结果
-			if ( null != data ) {
+			if (null != data) {
 				String deviceSn = data.getStringExtra("SN");
-				if ( null != deviceSn && null != mEditDevSN ) {
+				if (null != deviceSn && null != mEditDevSN) {
 					mEditDevSN.setText(deviceSn);
 				}
 			}
+		}else {
+			super.onActivityResult(requestCode, responseCode, data);
 		}
-		
+
 	}
 
 

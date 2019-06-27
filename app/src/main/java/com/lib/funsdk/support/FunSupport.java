@@ -75,6 +75,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import static com.lib.EUIMSG.DEV_SLEEP;
@@ -85,11 +86,15 @@ public class FunSupport implements IFunSDKResult {
     private static final String TAG = "FunSupport";
 
     // 应用证书,请在开放平台注册应用之后替换以下4个字段
-    private static final String APP_UUID = "e0534f3240274897821a126be19b6d46";
-    private static final String APP_KEY = "0621ef206a1d4cafbe0c5545c3882ea8";
-    private static final String APP_SECRET = "90f8bc17be2a425db6068c749dee4f5d";
-    private static final int APP_MOVECARD = 2;
+//    private static final String APP_UUID = "e0534f3240274897821a126be19b6d46";
+//    private static final String APP_KEY = "0621ef206a1d4cafbe0c5545c3882ea8";
+//    private static final String APP_SECRET = "90f8bc17be2a425db6068c749dee4f5d";
+//    private static final int APP_MOVECARD = 2;
 
+    private static final String APP_UUID = "c184e388c9f74e8b8e0514de8087b03a";
+    private static final String APP_KEY = "5290994858624e07a9738068049427a5";
+    private static final String APP_SECRET = "ebd11765fe4d468bb037b597579ee289";
+    private static final int APP_MOVECARD = 5;
 
 //    private static final String APP_UUID = "90b4eb2b73c44be28baf8d61cfc4f59e";
 //    private static final String APP_KEY = "103fdcef25eb46de91e6f308e98b5d03";
@@ -198,27 +203,63 @@ public class FunSupport implements IFunSDKResult {
 
         // 库初始化1
         SInitParam param = new SInitParam();
-        param.st_0_nAppType = SInitParam.LOGIN_TYPE_MOBILE;
-        result = FunSDK.Init(0, G.ObjToBytes(param));
+//        param.st_0_nAppType = SInitParam.LOGIN_TYPE_MOBILE;
+//        result = FunSDK.Init(0, G.ObjToBytes(param));
+
+        param.st_0_nAppType = SInitParam.LOGIN_TYPE_FUTRUE_HOME;
+        G.SetValue(param.st_1_nSource,"xmshop");
+        String country = Locale.getDefault().getCountry();
+        String language = Locale.getDefault().getLanguage();
+        if(language.equalsIgnoreCase("zh")&&(country.equalsIgnoreCase("TW") || country.equalsIgnoreCase("HK"))){
+            G.SetValue(param.st_2_language,country.toLowerCase());
+        }else {
+            G.SetValue(param.st_2_language,Locale.getDefault().getLanguage());
+        }
 
         // Please set the password prefix here
-//		result = FunSDK.InitExV2(0, G.ObjToBytes(param), 4, "GIGA_", "cloudgiga.com.br", 8765);
-        FunLog.i(TAG, "FunSDK.Init:" + result);
+//		result = FunSDK.InitExV2(0, G.ObjToBytes(param), 4, "GIGA_", "p2p.fcam.vn", 8765);
+        result = FunSDK.InitExV2(0, G.ObjToBytes(param), 0, "P2P_SERVER", "p2p.fcam.vn", 8765);
+        FunLog.i(TAG, "FunSDK.Initv2:" + result);
         //set user server IP Port
-//		result = FunSDK.SysSetServerIPPort("MI_SERVER", "cloudgiga.com.br", 80);
-//		FunLog.i(TAG, "FunSDK.InitServerIPPort:" + result);
+        result = FunSDK.SysSetServerIPPort("MI_SERVER", "rs.xmeye.net", 443);
+        FunLog.i(TAG, "FunSDK.SysSetServerIPPort: MI_SERVER" + result);
+
+        result = FunSDK.SysSetServerIPPort("STATUS_P2P_SERVER", "status-p2p.fcam.vn", 7703);
+        FunLog.i(TAG, "FunSDK.SysSetServerIPPort: STATUS_P2P_SERVER" + result);
+
+        result = FunSDK.SysSetServerIPPort("STATUS_DSS_SERVER", "status-dss.fcam.vn", 7701);
+        FunLog.i(TAG, "FunSDK.SysSetServerIPPort: STATUS_DSS_SERVER" + result);
+
+        result = FunSDK.SysSetServerIPPort("STATUS_RPS_SERVER", "status-rps.fcam.vn", 7705);
+        FunLog.i(TAG, "FunSDK.SysSetServerIPPort: STATUS_RPS_SERVER" + result);
+
+        result = FunSDK.SysSetServerIPPort("STATUS_IDR_SERVER", "status-wps.fcam.vn", 7706);
+        FunLog.i(TAG, "FunSDK.SysSetServerIPPort: STATUS_IDR_SERVER" + result);
+
+        result = FunSDK.SysSetServerIPPort("HLS_DSS_SERVER", "pub-dss-hls.fcam.vn", 8080);
+        FunLog.i(TAG, "FunSDK.SysSetServerIPPort: HLS_DSS_SERVER" + result);
+
+        result = FunSDK.SysSetServerIPPort("CONFIG_SERVER", "cfg.fcam.vn", 8086);
+        FunLog.i(TAG, "FunSDK.SysSetServerIPPort: CONFIG_SERVER" + result);
+
+        result = FunSDK.SysSetServerIPPort("UPGRADE_SERVER", "upgrades.fcam.vn", 8083);
+        FunLog.i(TAG, "FunSDK.SysSetServerIPPort: UPGRADE_SERVER" + result);
+
+        result = FunSDK.SysSetServerIPPort("CAPS_SERVER", "caps.fcam.vn", 443);
+        FunLog.i(TAG, "FunSDK.SysSetServerIPPort: CAPS_SERVER" + result);
+
 
         // 降低隐藏到后台时cpu使用及耗电
-        FunSDK.SetApplication((MyApplication)mContext.getApplicationContext());
-        // 库初始化2
-        FunSDK.MyInitNetSDK();
+        FunSDK.SetApplication((MyApplication) mContext.getApplicationContext());
+//        // 库初始化2
+//        FunSDK.MyInitNetSDK();
 
         // 设置临时文件保存路径
         FunSDK.SetFunStrAttr(EFUN_ATTR.APP_PATH, FunPath.getDefaultPath());
         // 设置设备更新文件保存路径
         FunSDK.SetFunStrAttr(EFUN_ATTR.UPDATE_FILE_PATH, FunPath.getDeviceUpdatePath());
-		// 设置SDK相关配置文件保存路径
-		FunSDK.SetFunStrAttr(EFUN_ATTR.CONFIG_PATH,FunPath.getDeviceConfigPath());
+        // 设置SDK相关配置文件保存路径
+        FunSDK.SetFunStrAttr(EFUN_ATTR.CONFIG_PATH, FunPath.getDeviceConfigPath());
         // 设置以互联网的方式访问
         result = FunSDK.SysInitNet(SERVER_IP, SERVER_PORT);
         FunLog.i(TAG, "FunSDK.SysInitNet : " + result);
@@ -248,6 +289,8 @@ public class FunSupport implements IFunSDKResult {
             FunSDK.SetFunStrAttr(EFUN_ATTR.USER_PWD_DB, FunPath.getConfigPassword());
             System.out.println("NativePasswordFileName" + FunPath.getConfigPassword());
         }
+        // 库初始化2
+        FunSDK.MyInitNetSDK();
     }
 
     public void term() {
@@ -1342,7 +1385,7 @@ public class FunSupport implements IFunSDKResult {
             mTmpSNLoginDeviceList.add(funDevice);
         }
         System.out.println("TTTTT----->>>password = " + loginPsd);
-        FunSDK.DevSetLocalPwd(funDevice.getDevSn(),loginName,loginPsd);
+        FunSDK.DevSetLocalPwd(funDevice.getDevSn(), loginName, loginPsd);
         int result = FunSDK.DevLogin(getHandler(),
                 funDevice.getDevSn(),
                 loginName, loginPsd,
@@ -1814,7 +1857,7 @@ public class FunSupport implements IFunSDKResult {
      * @return
      */
     public int requestDeviceStartTalk(FunDevice funDevice) {
-        return FunSDK.DevStarTalk(getHandler(), funDevice.getDevSn(),0,0, 0);
+        return FunSDK.DevStarTalk(getHandler(), funDevice.getDevSn(), 0, 0, 0);
     }
 
     public void requestDeviceStopTalk(int hTalker) {
@@ -2194,11 +2237,11 @@ public class FunSupport implements IFunSDKResult {
                                      String devMac) {
         FunDevice funDevice = findDeviceBySn(devMac);// findTempDevice(devMac);
         if (null == funDevice) {
-        	if (devType == FunDevType.EE_DEV_INTELLIGENTSOCKET) {
-        		funDevice = new FunDeviceSocket();
-			}else {
-				funDevice = new FunDevice();
-			}
+            if (devType == FunDevType.EE_DEV_INTELLIGENTSOCKET) {
+                funDevice = new FunDeviceSocket();
+            } else {
+                funDevice = new FunDevice();
+            }
             funDevice.devMac = devMac;
             funDevice.devName = devMac;
             funDevice.devIp = "0.0.0.0";
@@ -2318,7 +2361,7 @@ public class FunSupport implements IFunSDKResult {
         if (null != funDevice) {
             if (funDevice.hasLogin()) {
                 requestDeviceLogout(funDevice);
-            }else {
+            } else {
                 FunSDK.DevLogout(getHandler(), funDevice.getDevSn(), funDevice.getId());
             }
         }
@@ -2339,7 +2382,7 @@ public class FunSupport implements IFunSDKResult {
     }
 
     //同步时区
-    public void requestSyncDevZone(FunDevice funDevice,int zone) {
+    public void requestSyncDevZone(FunDevice funDevice, int zone) {
         TimeZoneBean timeZoneBean = new TimeZoneBean();
         timeZoneBean.timeMin = zone;
         timeZoneBean.FirstUserTimeZone = 0;
@@ -2348,9 +2391,9 @@ public class FunSupport implements IFunSDKResult {
                 HandleConfigData.getSendData(JsonConfig.SYSTEM_TIMEZONE,
                         "0x1", timeZoneBean),
                 -1, 5000, funDevice.getId());
-        FunSDK.DevGetConfigByJson(getHandler(),funDevice.getDevSn(),
+        FunSDK.DevGetConfigByJson(getHandler(), funDevice.getDevSn(),
                 JsonConfig.GENERAL_LOCATION,
-                1024,-1,5000,funDevice.getId());
+                1024, -1, 5000, funDevice.getId());
     }
 
     private void parseBatteryState(String jsonStr) {
@@ -2443,9 +2486,9 @@ public class FunSupport implements IFunSDKResult {
                 int idrState = FunSDK.GetDevState(msgContent.str, SDKCONST.EFunDevStateType.IDR);
                 if (idrState == SDKCONST.EFunDevState.SLEEP) {
                     devStatus = FunDevStatus.STATUS_SLEEP;
-                }else if (idrState == 3) {
+                } else if (idrState == 3) {
                     devStatus = FunDevStatus.STATUS_CAN_NOT_WAKE_UP;
-                }else {
+                } else {
                     devStatus = FunDevStatus.STATUS_ONLINE;
                 }
                 if (msg.arg1 == FunError.EE_OK) {
@@ -2456,7 +2499,7 @@ public class FunSupport implements IFunSDKResult {
                             ((OnFunGetUserInfoListener) l).onLogoutSuccess();
                         }
                         if (l instanceof OnFunDeviceWakeUpListener) {
-                            ((OnFunDeviceWakeUpListener) l).onSleepResult(true,devStatus);
+                            ((OnFunDeviceWakeUpListener) l).onSleepResult(true, devStatus);
                         }
                     }
                 } else {
@@ -2667,7 +2710,7 @@ public class FunSupport implements IFunSDKResult {
                         int idrState = FunSDK.GetDevState(msgContent.str, SDKCONST.EFunDevStateType.IDR);
                         if (idrState == SDKCONST.EFunDevState.SLEEP) {
                             devStatus = FunDevStatus.STATUS_SLEEP;
-                        }else if (idrState == 3) {
+                        } else if (idrState == 3) {
                             devStatus = FunDevStatus.STATUS_CAN_NOT_WAKE_UP;
                         }
                     }
@@ -2957,7 +3000,7 @@ public class FunSupport implements IFunSDKResult {
                                             .onDeviceGetConfigSuccess(funDevice, msgContent.str, msgContent.seq);
                                 }
                             }
-                        }else if (DeviceGetJson.onParse(funDevice, msgContent.str, json)) {
+                        } else if (DeviceGetJson.onParse(funDevice, msgContent.str, json)) {
                             // 此处特殊处理,如果是SystemInfo,msg.arg2是连接方式
                             if (SystemInfo.CONFIG_NAME.equals(msgContent.str)) {
                                 funDevice.setNetConnectType(msg.arg2);
@@ -3365,7 +3408,7 @@ public class FunSupport implements IFunSDKResult {
                     // 收到设备报警
                     for (OnFunListener l : mListeners) {
                         if (l instanceof OnFunDeviceAlarmListener) {
-                            ((OnFunDeviceAlarmListener) l).onDeviceAlarmReceived(funDev,alarmInfo);
+                            ((OnFunDeviceAlarmListener) l).onDeviceAlarmReceived(funDev, alarmInfo);
                         }
                     }
                 }
@@ -3487,7 +3530,7 @@ public class FunSupport implements IFunSDKResult {
                     }
                 }
             }
-                break;
+            break;
             case DEV_SLEEP: {
                 FunDevStatus devStatus = null;
                 int idrState = FunSDK.GetDevState(msgContent.str, SDKCONST.EFunDevStateType.IDR);
@@ -3505,7 +3548,7 @@ public class FunSupport implements IFunSDKResult {
                     }
                 }
             }
-                break;
+            break;
             case EUIMSG.EMSG_DEV_START_UPLOAD_DATA:
                 for (OnFunListener l : mListeners) {
                     if (l instanceof OnFunDevBatteryLevelListener) {

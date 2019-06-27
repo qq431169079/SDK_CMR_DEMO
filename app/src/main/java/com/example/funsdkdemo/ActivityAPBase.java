@@ -8,7 +8,7 @@
 package com.example.funsdkdemo;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.lib.funsdk.support.utils.APAutomaticSwitch;
 import com.lib.funsdk.support.utils.DeviceWifiManager;

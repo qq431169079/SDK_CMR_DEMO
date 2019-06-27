@@ -6,9 +6,10 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.util.LruCache;
 import android.view.View;
 import android.widget.*;
+
+import androidx.collection.LruCache;
 
 import com.basic.G;
 import com.example.funsdkdemo.ActivityDemo;
@@ -163,7 +164,7 @@ public class ActivityGuideDevicePicBrowser extends ActivityDemo implements OnFun
         Intent it = new Intent(ActivityGuideDevicePicBrowser.this,
                 ActivityGuideDeviceNormalPic.class);
         it.putExtra("preview", true);
-        int position = mIndex >= mDatas.size() - 1 ? mDatas.size() - 1: mIndex;
+        int position = mIndex >= mDatas.size() - 1 ? mDatas.size() - 1 : mIndex;
         it.putExtra("position", position);
         it.putExtra("FUN_DEVICE_ID", mFunDevice.getId());
         startActivity(it);
@@ -201,7 +202,6 @@ public class ActivityGuideDevicePicBrowser extends ActivityDemo implements OnFun
 
         FunSupport.getInstance().requestDeviceSearchPicByPath(mFunDevice, cmdOPFileQueryJP, fileFlag);
     }
-
 
 
     private void prepareAllBitmap(boolean toDownload) {
@@ -269,7 +269,7 @@ public class ActivityGuideDevicePicBrowser extends ActivityDemo implements OnFun
      * 为ImageView设置图片(Image) 1 从缓存中获取图片 2 若图片不在缓存中则为其设置默认图片
      */
     private void setImage(String imagePath) {
-        if ( null != imagePath && imagePath.length() > 0 ) {
+        if (null != imagePath && imagePath.length() > 0) {
             mImageBrowser.setTag(imagePath);
             Bitmap bitmap = getBitmapFromLruCache(imagePath);
             if (bitmap != null) {
@@ -298,7 +298,7 @@ public class ActivityGuideDevicePicBrowser extends ActivityDemo implements OnFun
      * 从LruCache缓存获取图片
      */
     public Bitmap getBitmapFromLruCache(String key) {
-        if ( null == mLruCache ) {
+        if (null == mLruCache) {
             return null;
         }
 
@@ -309,9 +309,8 @@ public class ActivityGuideDevicePicBrowser extends ActivityDemo implements OnFun
 
         @Override
         public void handleMessage(Message msg) {
-            switch(msg.what) {
-                case PLAY_PICTURE:
-                {
+            switch (msg.what) {
+                case PLAY_PICTURE: {
                     if (isPlay) {
                         mIndex++;
                         if (mIndex >= mDatas.size()) {
@@ -364,10 +363,10 @@ public class ActivityGuideDevicePicBrowser extends ActivityDemo implements OnFun
     private FunFileData getFileData(int position) {
         int pos = position;
         DevCmdOPSCalendar opsCalendar = (DevCmdOPSCalendar) mFunDevice.checkConfig(DevCmdOPSCalendar.CONFIG_NAME);
-        for ( SameDayPicInfo picInfo : opsCalendar.getData() ) {
-            if ( pos >= 0 && pos < picInfo.getPicNum() ) {
+        for (SameDayPicInfo picInfo : opsCalendar.getData()) {
+            if (pos >= 0 && pos < picInfo.getPicNum()) {
                 return picInfo.getPicData(pos);
-            } else if ( pos >= picInfo.getPicNum() ) {
+            } else if (pos >= picInfo.getPicNum()) {
                 pos -= picInfo.getPicNum();
             } else {
                 return null;
@@ -375,7 +374,6 @@ public class ActivityGuideDevicePicBrowser extends ActivityDemo implements OnFun
         }
         return null;
     }
-
 
 
     @Override
@@ -400,7 +398,7 @@ public class ActivityGuideDevicePicBrowser extends ActivityDemo implements OnFun
                     mInfo.getEndTimeStr(23, 59, 59), 0);
             mFileQueryJP.setFileData(mDatas);*/
 
-        }else if (DevCmdOPFileQueryJP.CONFIG_NAME.equals(configName)) {
+        } else if (DevCmdOPFileQueryJP.CONFIG_NAME.equals(configName)) {
             DevCmdOPFileQueryJP cmdOPFileQueryJP = (DevCmdOPFileQueryJP)
                     mFunDevice.getConfig(DevCmdOPFileQueryJP.CONFIG_NAME);
 
@@ -430,35 +428,35 @@ public class ActivityGuideDevicePicBrowser extends ActivityDemo implements OnFun
 
     @Override
     public void onDeviceSetConfigSuccess(final FunDevice funDevice,
-    		final String configName) {
+                                         final String configName) {
     }
 
     @Override
-    public void onDeviceSetConfigFailed(final FunDevice funDevice, 
-    		final String configName, final Integer errCode) {
+    public void onDeviceSetConfigFailed(final FunDevice funDevice,
+                                        final String configName, final Integer errCode) {
 
     }
 
     @Override
-	public void onDeviceChangeInfoSuccess(final FunDevice funDevice) {
-		// TODO Auto-generated method stub
-	}
-	
-	@Override
-	public void onDeviceChangeInfoFailed(final FunDevice funDevice, final Integer errCode) {
-		// TODO Auto-generated method stub
-	}
-	
-	@Override
-	public void onDeviceOptionSuccess(final FunDevice funDevice, final String option) {
-		// TODO Auto-generated method stub
-	}
-	
-	@Override
-	public void onDeviceOptionFailed(final FunDevice funDevice, final String option, final Integer errCode) {
-		// TODO Auto-generated method stub
-	}
-	
+    public void onDeviceChangeInfoSuccess(final FunDevice funDevice) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void onDeviceChangeInfoFailed(final FunDevice funDevice, final Integer errCode) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void onDeviceOptionSuccess(final FunDevice funDevice, final String option) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void onDeviceOptionFailed(final FunDevice funDevice, final String option, final Integer errCode) {
+        // TODO Auto-generated method stub
+    }
+
     @Override
     public void onDeviceFileListChanged(FunDevice funDevice) {
 
@@ -484,9 +482,9 @@ public class ActivityGuideDevicePicBrowser extends ActivityDemo implements OnFun
 
     }
 
-	@Override
-	public void onDeviceFileListGetFailed(FunDevice funDevice) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onDeviceFileListGetFailed(FunDevice funDevice) {
+        // TODO Auto-generated method stub
+
+    }
 }

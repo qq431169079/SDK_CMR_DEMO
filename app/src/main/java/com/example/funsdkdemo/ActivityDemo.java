@@ -6,12 +6,13 @@ import java.util.List;
 import com.example.common.DialogWaitting;
 import com.example.common.UIFactory;
 
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import androidx.fragment.app.FragmentActivity;
 
 public class ActivityDemo extends FragmentActivity {
 	private DialogWaitting mWaitDialog = null;

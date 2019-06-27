@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bang.demo.loglibrary.LogUtil;
 import com.basic.G;
 import com.example.funsdkdemo.ListAdapterFunDevice.OnFunDeviceItemClickListener;
 import com.example.funsdkdemo.alarm.ActivityGuideDeviceAlarmResult;
@@ -158,6 +159,7 @@ public class ActivityGuideDeviceList extends ActivityDemo
 
         mDeviceList.addAll(FunSupport.getInstance().getDeviceList());
 
+        LogUtil.e(FunSupport.getInstance().getDeviceList().size());
         mAdapter.notifyDataSetInvalidated();
 
         mHandler.removeMessages(MESSAGE_REFRESH_DEVICE_STATUS);
