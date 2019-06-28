@@ -8,6 +8,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.bang.demo.loglibrary.LogUtil;
 import com.basic.G;
 import com.example.funsdkdemo.MyApplication;
 import com.example.funsdkdemo.utils.XUtils;
@@ -92,9 +93,9 @@ public class FunSupport implements IFunSDKResult {
 //    private static final int APP_MOVECARD = 2;
 
     private static final String APP_UUID = "c184e388c9f74e8b8e0514de8087b03a";
-    private static final String APP_KEY = "5290994858624e07a9738068049427a5";
-    private static final String APP_SECRET = "ebd11765fe4d468bb037b597579ee289";
-    private static final int APP_MOVECARD = 5;
+    private static final String APP_KEY = "a9542481fa684706bbd13b4c820ab320";
+    private static final String APP_SECRET = "6e96cd3c5ebe44219eb3855dd6211467";
+    private static final int APP_MOVECARD = 3;
 
 //    private static final String APP_UUID = "90b4eb2b73c44be28baf8d61cfc4f59e";
 //    private static final String APP_KEY = "103fdcef25eb46de91e6f308e98b5d03";
@@ -207,52 +208,42 @@ public class FunSupport implements IFunSDKResult {
 //        result = FunSDK.Init(0, G.ObjToBytes(param));
 
         param.st_0_nAppType = SInitParam.LOGIN_TYPE_FUTRUE_HOME;
-        G.SetValue(param.st_1_nSource,"xmshop");
+        G.SetValue(param.st_1_nSource, "xmshop");
         String country = Locale.getDefault().getCountry();
         String language = Locale.getDefault().getLanguage();
-        if(language.equalsIgnoreCase("zh")&&(country.equalsIgnoreCase("TW") || country.equalsIgnoreCase("HK"))){
-            G.SetValue(param.st_2_language,country.toLowerCase());
-        }else {
-            G.SetValue(param.st_2_language,Locale.getDefault().getLanguage());
+        if (language.equalsIgnoreCase("zh") && (country.equalsIgnoreCase("TW") || country.equalsIgnoreCase("HK"))) {
+            G.SetValue(param.st_2_language, country.toLowerCase());
+        } else {
+            G.SetValue(param.st_2_language, Locale.getDefault().getLanguage());
         }
 
         // Please set the password prefix here
 //		result = FunSDK.InitExV2(0, G.ObjToBytes(param), 4, "GIGA_", "p2p.fcam.vn", 8765);
-        result = FunSDK.InitExV2(0, G.ObjToBytes(param), 0, "P2P_SERVER", "p2p.fcam.vn", 8765);
-        FunLog.i(TAG, "FunSDK.Initv2:" + result);
+        FunSDK.InitExV2(0, G.ObjToBytes(param), 0, "P2P_SERVER", "p2p.fcam.vn", 8765);
         //set user server IP Port
-        result = FunSDK.SysSetServerIPPort("MI_SERVER", "rs.xmeye.net", 443);
-        FunLog.i(TAG, "FunSDK.SysSetServerIPPort: MI_SERVER" + result);
+        FunSDK.SysSetServerIPPort("MI_SERVER", "rs.xmeye.net", 443);
 
-        result = FunSDK.SysSetServerIPPort("STATUS_P2P_SERVER", "status-p2p.fcam.vn", 7703);
-        FunLog.i(TAG, "FunSDK.SysSetServerIPPort: STATUS_P2P_SERVER" + result);
+        FunSDK.SysSetServerIPPort("STATUS_P2P_SERVER", "status-p2p.fcam.vn", 7703);
 
-        result = FunSDK.SysSetServerIPPort("STATUS_DSS_SERVER", "status-dss.fcam.vn", 7701);
-        FunLog.i(TAG, "FunSDK.SysSetServerIPPort: STATUS_DSS_SERVER" + result);
+        FunSDK.SysSetServerIPPort("STATUS_DSS_SERVER", "status-dss.fcam.vn", 7701);
 
-        result = FunSDK.SysSetServerIPPort("STATUS_RPS_SERVER", "status-rps.fcam.vn", 7705);
-        FunLog.i(TAG, "FunSDK.SysSetServerIPPort: STATUS_RPS_SERVER" + result);
+        FunSDK.SysSetServerIPPort("STATUS_RPS_SERVER", "status-rps.fcam.vn", 7705);
 
-        result = FunSDK.SysSetServerIPPort("STATUS_IDR_SERVER", "status-wps.fcam.vn", 7706);
-        FunLog.i(TAG, "FunSDK.SysSetServerIPPort: STATUS_IDR_SERVER" + result);
+        FunSDK.SysSetServerIPPort("STATUS_IDR_SERVER", "status-wps.fcam.vn", 7706);
 
-        result = FunSDK.SysSetServerIPPort("HLS_DSS_SERVER", "pub-dss-hls.fcam.vn", 8080);
-        FunLog.i(TAG, "FunSDK.SysSetServerIPPort: HLS_DSS_SERVER" + result);
+        FunSDK.SysSetServerIPPort("HLS_DSS_SERVER", "pub-dss-hls.fcam.vn", 8080);
 
-        result = FunSDK.SysSetServerIPPort("CONFIG_SERVER", "cfg.fcam.vn", 8086);
-        FunLog.i(TAG, "FunSDK.SysSetServerIPPort: CONFIG_SERVER" + result);
+        FunSDK.SysSetServerIPPort("CONFIG_SERVER", "cfg.fcam.vn", 8086);
 
-        result = FunSDK.SysSetServerIPPort("UPGRADE_SERVER", "upgrades.fcam.vn", 8083);
-        FunLog.i(TAG, "FunSDK.SysSetServerIPPort: UPGRADE_SERVER" + result);
+        FunSDK.SysSetServerIPPort("UPGRADE_SERVER", "upgrades.fcam.vn", 8083);
 
-        result = FunSDK.SysSetServerIPPort("CAPS_SERVER", "caps.fcam.vn", 443);
-        FunLog.i(TAG, "FunSDK.SysSetServerIPPort: CAPS_SERVER" + result);
+        FunSDK.SysSetServerIPPort("CAPS_SERVER", "caps.fcam.vn", 443);
 
 
         // 降低隐藏到后台时cpu使用及耗电
         FunSDK.SetApplication((MyApplication) mContext.getApplicationContext());
 //        // 库初始化2
-//        FunSDK.MyInitNetSDK();
+        FunSDK.MyInitNetSDK();
 
         // 设置临时文件保存路径
         FunSDK.SetFunStrAttr(EFUN_ATTR.APP_PATH, FunPath.getDefaultPath());
@@ -289,8 +280,7 @@ public class FunSupport implements IFunSDKResult {
             FunSDK.SetFunStrAttr(EFUN_ATTR.USER_PWD_DB, FunPath.getConfigPassword());
             System.out.println("NativePasswordFileName" + FunPath.getConfigPassword());
         }
-        // 库初始化2
-        FunSDK.MyInitNetSDK();
+
     }
 
     public void term() {
@@ -2302,12 +2292,14 @@ public class FunSupport implements IFunSDKResult {
      * 初始化设备报警/消息推送服务(必须在登录成功之后使用)
      */
     private void mpsInit() {
+
+        LogUtil.e("Push Alarm --- bang fpt");
         // 初始化消息推送服务
         try {
             if (null != mLoginUserName
                     && !mLoginUserName.equals(mLastMpsUserName)) {
                 String pushToken = MyUtils.getMpsPushToken(getContext());
-
+                LogUtil.e("Push Alarm --- pushToken "+pushToken);
                 SMCInitInfo info = new SMCInitInfo();
                 G.SetValue(info.st_0_user, mLoginUserName);
                 G.SetValue(info.st_1_password, mLoginPassword);
@@ -2316,10 +2308,11 @@ public class FunSupport implements IFunSDKResult {
                 MpsClient.Init(getHandler(), G.ObjToBytes(info), 0);
 
                 mLastMpsUserName = mLoginUserName;
-
+                LogUtil.e("Push Alarm --- mLastMpsUserName "+mLastMpsUserName);
                 FunLog.i(TAG, "MpsClient init with user : " + mLastMpsUserName);
             }
         } catch (Exception e) {
+            LogUtil.e("Push Alarm --- Exception "+e.toString());
             e.printStackTrace();
         }
     }
